@@ -15,7 +15,7 @@ import (
 )
 
 func main() {
-	contents, err := readFile("example.json")
+	contents, err := readFile("examples/http-server/errors.json")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -37,12 +37,12 @@ func main() {
 		predefined:       predefined,
 		errorDefinitions: errorCodeDefinitions,
 	}
-	result := o.compose("test")
+	result := o.compose("errors")
 	formattedResult, err := formatCode(result)
 	if err != nil {
 		log.Fatal(err)
 	}
-	if err := writeGenerated("test/test.go", formattedResult); err != nil {
+	if err := writeGenerated("examples/http-server/errors/errors.go", formattedResult); err != nil {
 		log.Fatal(err)
 	}
 }

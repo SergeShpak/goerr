@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"runtime/debug"
+	"strings"
 )
 `
 
@@ -56,7 +57,7 @@ func ChainErrMessage(err error, msg string) error {
 		msg := fmt.Sprintf("%s: %v", msg, err)
 		attrs := ErrorAttributes{
 			ID:            ErrIDBaseError,
-			Stack:         debug.Stack(),
+			Stack:         getStack(),
 			Msg:           msg,
 			HTTPCode:      http.StatusInternalServerError,
 			OriginalError: err,
@@ -106,6 +107,9 @@ func newErrorMessage(msg string, err error) string {
 
 func getStack() []byte {
 	stack := debug.Stack()
+	stackFrames := strings.Split(string(stack), "\n")
+	stackFrames = append([]string{stackFrames[0]}, stackFrames[7:]...)
+	stack = []byte(strings.Join(stackFrames, "\n"))
 	return stack
 }
 `
