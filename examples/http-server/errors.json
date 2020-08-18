@@ -1,0 +1,8 @@
+{
+  "Unauthorized": {
+    "HTTPCode": 403,
+    "Payload": {
+      "Namespace": "string"
+    }
+  }
+}
